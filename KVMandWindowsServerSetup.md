@@ -45,7 +45,7 @@
 1. Install some KVM softwares
 
     ```bat
-    $ yum -y install libguiestfs libvirt libvirt-client python-virtinst qemu-kvm virt-manager virt-top virt-viewer virt-who virt-install bridge-utils
+    $ yum -y install libguestfs libvirt libvirt-client python-virtinst qemu-kvm virt-manager virt-top virt-viewer virt-who virt-install bridge-utils
     ```
     
     - After installation of KVM, a virtual bridge "virbr0" of a virtual network "default" is created.
