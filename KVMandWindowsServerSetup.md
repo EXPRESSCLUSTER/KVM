@@ -1,6 +1,6 @@
-# How to setup KVM and Virtual Windows Server (CUI) to configure EXPRESSCLUSTER with a shared disk.
+# How to setup KVM and Virtual Windows Server (CUI) to configure EXPRESSCLUSTER X with a shared disk.
 
-## Abstract
+## Introduction
 
 - This guide provides how to setup KVM and Virtual Windows Server.
 - Regarding shared disk settings, please refer to the following documents.
@@ -14,6 +14,8 @@
 
 - API to control virtual resources: libvirt 3.9.0
 - Emulater: QEMU 1.5.3
+
+- EXPRESSCLUSTER X 4.0
 
 
 ```bat
@@ -135,8 +137,15 @@
     > diskpart
     ```
     
-    
-## Windows Server command
+## Setup EXPRESSCLUSTER X
+
+Please look up how to setup EXPRESSCLUSTER X in the URL below.
+
+- https://www.nec.com/en/global/prod/expresscluster/en/support/manuals.html
+
+## Appendix
+
+### Useful commands on Windows server
 
 - Display NIC name
 
