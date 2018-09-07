@@ -1,10 +1,9 @@
 # How to setup KVM and Virtual Windows Server (CUI) to configure EXPRESSCLUSTER with a shared disk.
 
 ## Abstract
+
 - This guide provides how to setup KVM and Virtual Windows Server.
-
 - Regarding shared disk settings, please refer to the following documents.
-
     - https://github.com/EXPRESSCLUSTER/iSCSI/blob/master/iSCSISetup.md
 
 
@@ -18,25 +17,30 @@
 
 
 ```bat
-<LAN>
- |                                               +-------------------+
- |                                               |Virtual Machine    |
- |                                  +------------+- Windows Server   |
- |                                  |            |- iSCSI initiator  |
- |                                  |            |- EXPRESSCLUSTER X |
- |                                  |            +-------------------+
- |  +--------------------+          |
- |  |Physical Machine    |     +----+---+
- +--|- CentOS            +-----+ virbr0 |
- |  |- QEMU-KVM          |     +----+---+
- |  |- iSCSI target      |          |
- |  +--------------------+          |
- |                                  |            +-------------------+
- |                                  |            |Virtual Machine    |
- |                                  +------------+- Windows Server   |
- |                                               |- iSCSI initiator  |
- |                                               |- EXPRESSCLUSTER X |
- |                                               +-------------------+
+                   KVM VMs
+  +----------------+    +----------------+
+  | Windows Server |    | Windows Server |
+  |                |    |                |
+  |iSCSI initiator |    |iSCSI initiator |
+  |      ECX       |    |      ECX       |
+  |                |    |                |
+  +------+---------+    +--------+-------+
+         |                       |
+         |      +----------------+
+         |      |
+  +------|------|------------------------+
+  |  +---+------+---+                    |
+  |  |virtual bridge|                    |
+  |  +--------------+                    |
+  |      |                               |
+  |      |         Cent OS               |
+  |      |                               |
+  |      |       iSCSI target            |
+  |      |         QEMU-KVM              |
+  +------+-------------------------------+
+         |         KVM Host
+         |
+<LAN>----+--------------------------------
 ```
 
 
@@ -44,25 +48,24 @@
 ### KVM setup
 1. Install some KVM softwares
 
+    After installation of KVM, a virtual bridge "virbr0" of a virtual network "default" is created.
+    
+    When you create a new virtual network, a new virutal bridge is created.
+
     ```bat
-    $ yum -y install libguiestfs libvirt libvirt-client python-virtinst qemu-kvm virt-manager virt-top virt-viewer virt-who virt-install bridge-utils
+    $ yum -y install libguestfs libvirt libvirt-client python-virtinst qemu-kvm virt-manager virt-top virt-viewer virt-who virt-install bridge-utils
     ```
     
-    - After installation of KVM, a virtual bridge "virbr0" of a virtual network "default" is created.
-    
-    - When you create a new virtual network, a new virutal bridge is created.
-    
-    - You can delete "virbr0" by deleting a "default".
     
 2. Construct a virtual network
 
-    First of all, launch the "virt-manager"
+    First of all, launch the "virt-manager".
+    
+    You can construct virtual environments and operate virtual machines with virt-manager.
 
     ```bat 
     $ virt-manager
     ```
-    
-    - You can construct virtual environments and operate virtual machines with virt-manager.
     
     1. Click "Edit" and then "Connection Details".
     
@@ -72,15 +75,11 @@
     
     4. Type "Network Name" and then define its IP address.
         
-        - By Checking "Enable DHCPv4", you can use DHCP.
-        
-        - In this case, virtual DHCP assigns the IP addresses in the range you select to virtual machines.
+        If you use DHCP, please check "Enable DHCPv4".
     
     5. Click "Forwarding to physical network".
     
-        - The gateway of the virtual network is connected to the destination NIC you select.
-        
-        - By this setting, a virtual machine can connect outside of its host machine.
+        A virtual machine can connect outside of its host machine via its virtual bridge.
         
     6. Click "Finish".
     
@@ -94,7 +93,7 @@
     
 4. Edit a configuration of virtual machines
 
-    - You can edit a configuration of virtual machines by clicking "Open" after right-clicking servers.
+    You can edit a configuration of virtual machines by clicking "Open" after right-clicking servers.
     
     
 ### Windows setup
@@ -112,7 +111,7 @@
     
 2. Configure computer name, network settings
 	
-	- You can configure these settings using the "sconfig" command.
+	You can configure these settings using the "sconfig" command.
 	
 	```bat
 	> sconfig
@@ -139,27 +138,37 @@
     
 ## Windows Server command
 
+- Display NIC name
+
+    ```bat
+    > ipconfig
+    ```
+
 - Disable NIC
 
     ```bat
     PS C:> Disable-NetAdapter -Name "<NIC name>"
+    
+    e.g. > Disable-NetAdapter -Name "Ethernet 1"
     ```
     
 - Enable NIC
 
     ```bat
     PS C:> Enable-NetAdapter -Name "<NIC name>"
+    
+    e.g. > Enable-NetAdapter -Name "Ethernet 1"
     ```
     
 - Open multiple command-prompts
 
-    - Ctrl+Alt+Delete
+    1. Ctrl+Alt+Delete
     
-    - Select "Task Manager"
+    2. Select "Task Manager"
     
-    - Select "Run new task" after right clicking on "Windows Command Processor"
+    3. Select "Run new task" after right clicking on "Windows Command Processor"
     
-    - Type "cmd" and then click "OK"
+    4. Type "cmd" and then click "OK"
     
 
 ## References
