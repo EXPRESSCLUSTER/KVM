@@ -145,7 +145,7 @@ Please look up how to setup EXPRESSCLUSTER X in the URL below.
 
 ## Appendix
 
-### Useful commands on Windows server
+### Useful commands for Windows server
 
 - Display NIC name
 
