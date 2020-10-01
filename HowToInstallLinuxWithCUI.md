@@ -18,3 +18,28 @@
       :
      ```
 3. You can get installation CUI.
+
+# Appendix
+## How to Delete VM
+1. Undefine the VM.
+   ```sh
+   # virsh undefine <domain name>
+   ``
+1. Check pool name and device name.
+   ```sh
+   # virsh pool-list --all
+   # virsh vol-list <pool name>
+   ```
+1. Delete the device.
+   ```sh
+   # virsh vol-delete --pool <pool name> <device name>
+   ```
+1. Delete the pool.
+   ```sh
+   # virsh pool-destroy <pool name>
+   # virsh pool-delete <pool name>
+   ```
+1. Undefine the pool.
+   ```sh
+   # virsh pool-undefine <pool name>
+   ```  
