@@ -24,7 +24,7 @@
 1. Undefine the VM.
    ```sh
    # virsh undefine <domain name>
-   ``
+   ```
 1. Check pool name and device name.
    ```sh
    # virsh pool-list --all
