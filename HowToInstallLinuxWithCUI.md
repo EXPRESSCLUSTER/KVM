@@ -1,7 +1,7 @@
 # How to Install Linux with CUI
 1. Create image file as below.
    ```sh
-   # qemu-img create -f qcow2 rhel8.qcow2 60G
+   qemu-img create -f qcow2 rhel8.qcow2 60G
    ```
 2. Run the following command to install Linux. 
    ```sh
@@ -9,7 +9,9 @@
    ```
    - If you can find your OS version, you can set it with ```--os-variant``` option.
      ```sh
-     # osinfo-query os
+     osinfo-query os
+     ```
+     ```sh
       Short ID             | Name                                               | Version  | ID
      ----------------------+----------------------------------------------------+----------+-----------------------------------------
       alpinelinux3.5       | Alpine Linux 3.5                                   | 3.5      | http://alpinelinux.org/alpinelinux/3.5
@@ -20,26 +22,44 @@
 3. You can get installation CUI.
 
 # Appendix
+## Attach/Detach Disk
+- Attach
+  ```sh
+  virsh attach-disk <guest OS name> <qcow2 file> hdb --type disk --config --subdriver qcow2 --driver qemu
+  ```
+- Detach
+  ```sh
+  virsh detach-disk --domain <guest OS name> --target hdb --config
+  ```
+## Attach/Detach DVD-ROM
+- Attach
+  ```sh
+  virsh attach-disk <guest OS name> <ISO file name> hdb --type cdrom --mode readonly --targetbus ide
+  ```
+- Detach
+  ```sh
+  virsh detach-disk --domain <guest OS name> --target hdb --config
+  ```
 ## How to Delete VM
 1. Undefine the VM.
    ```sh
-   # virsh undefine <domain name>
+   virsh undefine <domain name>
    ```
 1. Check pool name and device name.
    ```sh
-   # virsh pool-list --all
-   # virsh vol-list <pool name>
+   virsh pool-list --all
+   virsh vol-list <pool name>
    ```
 1. Delete the device.
    ```sh
-   # virsh vol-delete --pool <pool name> <device name>
+   virsh vol-delete --pool <pool name> <device name>
    ```
 1. Delete the pool.
    ```sh
-   # virsh pool-destroy <pool name>
-   # virsh pool-delete <pool name>
+   virsh pool-destroy <pool name>
+   virsh pool-delete <pool name>
    ```
 1. Undefine the pool.
    ```sh
-   # virsh pool-undefine <pool name>
+   virsh pool-undefine <pool name>
    ```  
