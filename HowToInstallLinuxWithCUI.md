@@ -31,6 +31,22 @@
   ```sh
   virsh detach-disk --domain <guest OS name> --target hdb --config
   ```
+## Enable Shared Disk
+1. Shutdown a guest OS.
+1. Attach a disk.
+1. Run the following command and add cache and shareable.
+   ```sh
+   virsh edit <guest OS name>
+   ```
+   ```xml
+       <disk type='file' device='disk'>
+         <driver name='qemu' type='raw' cache='none'/>
+         <source file='/vm2/ml8-101/sd1.img'/>
+         <target dev='sdd' bus='scsi'/>
+         <shareable/>
+         <address type='drive' controller='0' bus='0' target='0' unit='3'/>
+       </disk>
+   ```
 ## Attach/Detach DVD-ROM
 - Attach
   ```sh
