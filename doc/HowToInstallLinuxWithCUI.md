@@ -33,7 +33,13 @@
   ```
 ## Enable Shared Disk
 1. Shutdown a guest OS.
-1. Attach a disk.
+   ```sh
+   virsh shutdown <guest OS name>
+   ```
+1. Create a disk as below.
+   ```sh
+   qemu-img create -f raw sd1.img 11G
+   ```
 1. Run the following command and add cache and shareable.
    ```sh
    virsh edit <guest OS name>
