@@ -8,7 +8,11 @@
 - Refer to the following documentation.
   - [How to Install Linux OS with CUI](doc/HowToInstallLinuxWithCUI.md)
 
-### How to Install Ubuntu with CUI
+### How to Install Amazon Linux
+- Refer to the following documentation.
+  - [How to Install Amazon Linux with CUI](doc/HowToInstallALWithCUI.md)
+
+### How to Install Ubuntu
 - From Ubuntu 22.04, you cannot get legacy type DVD so that you cannot use [the above steps](#how-to-install-linux-with-cui) to install Ubuntu. Please refer to the following documentation.
   - [How to Install Ubuntu with CUI](doc/HowToInstallUbuntuWithCUI.md)
 
