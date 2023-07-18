@@ -1,5 +1,8 @@
 # KVM
 ## Install KVM
+### CentOS
+- Refer to [these steps](doc/KVMandWindowsServerSetup.md#kvm-setup).
+
 ### Ubuntu
 - [Install KVM on Ubuntu](doc/InstallKVMonUbuntu.md)
 
