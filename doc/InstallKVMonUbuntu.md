@@ -1,4 +1,4 @@
-# Instal KVM on Ubuntu
+# Install KVM on Ubuntu
 - OS: Ubuntu Server 22.04.2 LTS
 
 ## Install KVM
